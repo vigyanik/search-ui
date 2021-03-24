@@ -4,5 +4,6 @@ export default async function runRequest(body) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body)
   });
-  return response.json();
+  var resp = response.json();
+  return resp;
 }

@@ -16,7 +16,7 @@ function buildMatch(searchTerm) {
     ? {
         multi_match: {
           query: searchTerm,
-          fields: ["title", "description"]
+          fields: ["ocr_text","FileName"]
         }
       }
     : { match_all: {} };
@@ -64,39 +64,28 @@ export default function buildRequest(state) {
       fragment_size: 200,
       number_of_fragments: 1,
       fields: {
-        title: {},
-        description: {}
+	ocr_text: {},
+	FileName: {}
       }
     },
     //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: ["id", "nps_link", "title", "description"],
+    _source: ["file_path", "FileSize", "FileModifyDate", "ocr_text","Megapixels","FileName","id"],
     aggs: {
-      states: { terms: { field: "states.keyword", size: 30 } },
-      world_heritage_site: {
-        terms: { field: "world_heritage_site" }
-      },
-      visitors: {
+      Megapixels: {
         range: {
-          field: "visitors",
+          field: "Megapixels",
           ranges: [
-            { from: 0.0, to: 10000.0, key: "0 - 10000" },
-            { from: 10001.0, to: 100000.0, key: "10001 - 100000" },
-            { from: 100001.0, to: 500000.0, key: "100001 - 500000" },
-            { from: 500001.0, to: 1000000.0, key: "500001 - 1000000" },
-            { from: 1000001.0, to: 5000000.0, key: "1000001 - 5000000" },
-            { from: 5000001.0, to: 10000000.0, key: "5000001 - 10000000" },
-            { from: 10000001.0, key: "10000001+" }
-          ]
-        }
-      },
-      acres: {
-        range: {
-          field: "acres",
-          ranges: [
-            { from: -1.0, key: "Any" },
-            { from: 0.0, to: 1000.0, key: "Small" },
-            { from: 1001.0, to: 100000.0, key: "Medium" },
-            { from: 100001.0, key: "Large" }
+            { from: 0.0, to: 0.1, key: "0 - 0.1" },
+            { from: 0.10001, to: 0.2, key: "0.10001 - 0.2" },
+            { from: 0.20001, to: 0.3, key: "0.20001 - 0.3" },
+            { from: 0.30001, to: 0.4, key: "0.30001 - 0.4" },
+            { from: 0.40001, to: 0.5, key: "0.40001 - 0.5" },
+            { from: 0.50001, to: 0.6, key: "0.50001 - 0.6" },
+            { from: 0.60001, to: 0.7, key: "0.60001 - 0.7" },
+            { from: 0.70001, to: 0.8, key: "0.70001 - 0.8" },
+            { from: 0.80001, to: 0.9, key: "0.80001 - 0.9" },
+            { from: 0.90001, to: 1.0, key: "0.90001 - 1.0" },
+            { from: 1.0001, key: "1.0001+" }
           ]
         }
       }

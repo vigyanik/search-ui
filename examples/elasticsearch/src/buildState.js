@@ -11,10 +11,6 @@ function buildTotalResults(hits) {
 }
 
 function getHighlight(hit, fieldName) {
-  if (hit._source.title === "Rocky Mountain" && fieldName === "title") {
-    window.hit = hit;
-    window.fieldName = fieldName;
-  }
   if (
     !hit.highlight ||
     !hit.highlight[fieldName] ||

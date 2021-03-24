@@ -46,7 +46,7 @@ const config = {
     const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
       responseJson,
       state,
-      ["visitors", "states"]
+	    ["Megapixels"]
     );
     return buildState(responseJsonWithDisjunctiveFacetCounts, resultsPerPage);
   }
@@ -66,10 +66,10 @@ export default function App() {
                     autocompleteResults={{
                       linkTarget: "_blank",
                       sectionTitle: "Results",
-                      titleField: "title",
-                      urlField: "nps_link",
+                      titleField: "FileName",
+                      urlField: "file_path",
                       shouldTrackClickThrough: true,
-                      clickThroughTags: ["test"]
+                      clickThroughTags: []
                     }}
                     autocompleteSuggestions={true}
                   />
@@ -86,35 +86,24 @@ export default function App() {
                             direction: ""
                           },
                           {
-                            name: "Title",
-                            value: "title",
+                            name: "FileName",
+                            value: "FileName",
                             direction: "asc"
                           }
                         ]}
                       />
                     )}
                     <Facet
-                      field="states"
-                      label="States"
-                      filterType="any"
-                      isFilterable={true}
-                    />
-                    <Facet
-                      field="world_heritage_site"
-                      label="World Heritage Site?"
-                    />
-                    <Facet field="visitors" label="Visitors" filterType="any" />
-                    <Facet
-                      field="acres"
-                      label="Acres"
+                      field="Megapixels"
+                      label="Megapixels"
                       view={SingleSelectFacet}
                     />
                   </div>
                 }
                 bodyContent={
                   <Results
-                    titleField="title"
-                    urlField="nps_link"
+                    titleField="FileName"
+                    urlField="file_path"
                     shouldTrackClickThrough={true}
                   />
                 }
